@@ -89,6 +89,8 @@ INT_PTR CALLBACK DialogProc(HWND hwndDig, UINT uMsg, WPARAM wParam, LPARAM lPara
 					HDC hdc = GetDC(hwndDig);
 					HWND hCtl1 = GetDlgItem(hwndDig, IDC_RADIO1);
 					HWND hCtl2 = GetDlgItem(hwndDig, IDC_RADIO2);
+					HPEN hMyPen = CreatePen(PS_SOLID, 2, RGB(255, 0, 0));
+					SelectObject(hdc, hMyPen);
 					if (isFirstPlayerTurn == true)
 					{
 						drawX(hdc, x, y);
@@ -120,7 +122,6 @@ INT_PTR CALLBACK DialogProc(HWND hwndDig, UINT uMsg, WPARAM wParam, LPARAM lPara
 		HPEN hMyPen = CreatePen(PS_SOLID, 2, RGB(255, 192, 203));
 		SelectObject(hdc, hMyPen);
 		drawBoard(hdc);
-		//DrawallBoards(hdc)
 		int x, y;
 		for (int i = 0; i < 9; i++)
 		{
@@ -136,7 +137,7 @@ INT_PTR CALLBACK DialogProc(HWND hwndDig, UINT uMsg, WPARAM wParam, LPARAM lPara
 			case 1: y = 100; break;
 			case 2: y = 150; break;
 			}
-			if (Array[i] == 0)
+			if (Array[i] != 0)
 				Array[i] == 1 ? drawX(hdc, x, y) : drawO(hdc, x, y);
 		}
 		ReleaseDC(hwndDig, hdc);
@@ -166,6 +167,8 @@ void drawX(HDC hdc, int x, int y)
 {
 	x += 35;
 	y += 25;
+	HPEN hMyPen = CreatePen(PS_SOLID, 2, RGB(255, 0, 0));
+	SelectObject(hdc, hMyPen);
 	MoveToEx(hdc, x - 10, y - 10, NULL);
 	LineTo(hdc, x + 10, y + 10);
 	MoveToEx(hdc, x - 10, y + 10, NULL);
@@ -175,6 +178,8 @@ void drawO(HDC hdc, int x, int y)
 {
 	x += 35;
 	y += 25;
+	HPEN hMyPen = CreatePen(PS_SOLID, 2, RGB(255, 0, 0));
+	SelectObject(hdc, hMyPen);
 	MoveToEx(hdc, x - 10, y - 10, NULL);
 	LineTo(hdc, x - 10, y + 10);
 	LineTo(hdc, x - 10, y - 10);
@@ -184,6 +189,7 @@ void drawO(HDC hdc, int x, int y)
 }
 void drawBoard(HDC hdc)
 {
+	Rectangle(hdc, 200, 50, 410, 200);
 	MoveToEx(hdc, 200, 100, NULL);
 	LineTo(hdc, 410, 100);
 	MoveToEx(hdc, 200, 150, NULL);
